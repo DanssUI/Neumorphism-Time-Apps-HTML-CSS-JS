@@ -1,0 +1,443 @@
+
+@import url(fontawesome/css/all.css);
+
+/* Dokumen */
+:root {
+	--primeLine: #FF0300;
+	--secondaryLine : #0065BD;
+	--timerPG: 0;
+	--totalsec : 0;
+	--totalsecTemp : 0;
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}
+
+*{
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	background-color: #ECF0F3;
+}
+
+body{
+	padding: 10px;
+	overflow: hidden;
+	height: 100vh;
+	width: 100vw;
+	margin: 0;
+}
+
+.container{
+	height: 100%;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Open Sans';
+}
+
+.content-wrapper{
+	height: 100%;
+	width: 100%;
+	display: flex;
+	flex-wrap: nowarp;
+	padding-bottom: 5%;
+	overflow-x: auto;
+  	scroll-snap-type: x mandatory;
+  
+ 	scroll-behavior: smooth;
+  	-webkit-overflow-scrolling: touch;
+}
+
+.content-wrapper a{
+	position: absolute;
+	right: 0;
+	top: 0;
+	margin: 30px 30px 0px 0px;
+	z-index: 1000;
+	color: black;
+	text-decoration: none;
+}
+
+.content-wrapper a:active{
+	color: black;
+}
+
+.loader{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	font-size: 1em;
+	z-index: 100;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.topnavbar{
+	position: absolute;
+	top: 0;
+	left: 0;
+	margin: 15px 0px 0px 15px;
+}
+
+.topnavbar h2{
+	font-weight: bold;
+}
+
+.navbar{
+	position: fixed;
+	bottom: 0;
+	display: flex;
+	justify-content: space-around;
+	margin-bottom: 20px;
+	z-index: 50;
+}
+
+.navbar button{
+	height: 55px;
+	width: 55px;
+	margin: 0px 20px 0px 20px;
+	border-radius: 10px;
+	border: 1px solid #F3F3F3; box-shadow: 5px 5px 10px #c3c3c3, -5px -5px 12px #ffffff;
+}
+
+.navbar button:hover{
+	box-shadow: inset 3px 3px 3px #cbced1, inset -3px -3px 3px white;
+}
+
+/* Bagian Jam*/
+.clock-section{
+	position: relative;
+	height: 100%;
+	width: 100%;
+	flex: 0 0 auto;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	scroll-snap-align: start;
+}
+
+.clock-section h1{
+	margin-top: 60px;
+}
+
+.clock-section h3{
+	color: #454545;
+	margin-top: 5px;
+}
+
+.ampmtogle{
+	position: absolute;
+	top: 73%;
+	width: 40px;
+	height: 40px;
+	font-size: .6em;
+	font-weight: bold;
+	border-radius: 10px;
+	border: 1px solid #F3F3F3; background: #ECF0F3; box-shadow: 3px 3px 7px #c3c3c3, -2px -2px 5px #ffffff;
+}
+
+/* Universal Analog */
+.analog{
+	display: flex;
+	align-items: center;
+	position: relative;
+	justify-content: center;
+	width: 280px;
+	height: 280px;
+	border-radius: 100%;
+	margin-bottom: 50px;
+	box-shadow: -6px -6px 15px white, 6px 6px 15px hsla(244, 30%, 86%, 1), inset 6px 6px 15px hsla(244, 30%, 86%, 1), inset -6px -6px 15px white;
+}
+
+.analog-timer{
+	margin-bottom: 50px;
+}
+
+.analog span{
+	width: 90px;
+	height: 90px;
+	border-radius: 100%;
+	border: 1px solid #F3F3F3; background: #ECF0F3; box-shadow: 3px 3px 7px #c3c3c3, -2px -2px 5px #ffffff;
+}
+
+.progress-ring{
+	position: absolute;
+	width: 280px;
+	height: 280px;
+	z-index: 0;
+	background: transparent;
+}
+
+.progress-ring-timer{
+	fill: none;
+	stroke-width: 8;
+	stroke-linecap: round;
+    stroke: #FF003E;
+    transform-origin: 50% 50%;
+    transform: rotate(-90deg);
+    stroke-dasharray: 780;
+    stroke-dashoffset: calc(780 - (780 * (var(--totalsecTemp) / var(--totalsec))));
+}
+
+.progress-ring-timer-back {
+	stroke: #D7D7D7;
+}
+
+.progress-ring__circle {
+    stroke-dasharray: 2 5;
+}
+
+.hand {
+  width: 50%;
+  right: 50%;
+  height: 5px;
+  background: #6900FF;
+  position: absolute;
+  top: 50%;
+  border-radius: 10px;
+  transform-origin: 100%;
+  transform: rotate(90deg);
+  transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
+}
+
+.hand.hour {
+  width: 30%;
+  z-index: 3;
+}
+
+.hand.mins {
+  height: 4px;
+  z-index: 10;
+  width: 40%;
+}
+
+.hand.secs {
+  background-color: red;
+  width: 45%;
+  height: 2px;
+  z-index: 2;
+}
+
+.twelve, 
+.three, 
+.six, 
+.nine {
+  position: absolute;
+  width: 16px;
+  height: 1px;
+  background-color: red;
+}
+
+.twelve, 
+.six {
+  transform: translateX(-50%) rotate(90deg);
+}
+
+.twelve {
+  top: 15px;
+  left: 50%;
+}
+
+.three {
+  top: 50%;
+  right: 15px;
+}
+
+.six {
+  bottom: 15px;
+  left: 50%;
+}
+
+.nine {
+  left: 15px;
+  top: 50%;
+}
+
+/* Bagian Stopwatch */
+.stopw-section{
+	position: relative;
+	height: 100%;
+	width: 100%;
+	flex: 0 0 auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	scroll-snap-align: start;
+}
+
+.lap-box-fixer{
+	display: none;
+	justify-content: start;
+	align-items: center;
+	flex-direction: column;
+	overflow-y: scroll;
+	margin-top: 30px;
+	width: 300px;
+	height: 90px;
+}
+
+.lap-box{
+	display: flex;
+	justify-content: start;
+	align-items: center;
+	flex-direction: column-reverse;
+	width: 300px;
+	height: 90px;
+}
+
+.laptab{
+	display: flex;
+	flex-shrink: 0;
+	align-items: center;
+	justify-content: space-around;
+	height: 35px;
+	width: 250px;
+	text-align: center;
+	border-radius: 5px;
+	margin: 5px 0px 5px 0px;
+	border: 1px solid #F3F3F3; background: #ECF0F3; box-shadow: 5px 5px 10px #c3c3c3, -5px -5px 12px #ffffff;
+}
+
+.swbtn-holder{
+	display: flex;
+	justify-content: space-around;
+	gap: 10vw;
+}
+
+.swbtn-holder button{
+	width: 120px;
+	height: 40px;
+	border-radius: 10px;
+	font-weight: bold;
+	font-size: 1.1em;
+	border: 1px solid #F3F3F3; background: #ECF0F3; box-shadow: 8px 8px 16px #c3c3c3, -5px -5px 5px #ffffff;
+}
+
+/* Bagian Timer */
+.timer-section {
+	position: relative;
+	height: 100%;
+	width: 100%;
+	position: relative;
+	flex: 0 0 auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	background-color: transparent;
+	scroll-snap-align: start;
+}
+
+.timedisplayHolder{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.timer-btnholder{
+	width: 280px;
+	height: 45px;
+	display: flex;
+	justify-content: space-around;
+	gap: 10vw;
+}
+
+.timer-btnholder button{
+	width: 120px;
+	height: 40px;
+	border-radius: 10px;
+	font-weight: bold;
+	font-size: 1.1em;
+	flex-grow: 1;
+	border: 1px solid #F3F3F3; background: #ECF0F3; box-shadow: 8px 8px 16px #c3c3c3, -5px -5px 5px #ffffff;
+}
+
+.time-boxes{
+	display: flex;
+	justify-content:  start;
+	align-items: center;
+	width: 280px;
+	height: 70px;
+	margin-bottom: 20px;
+	
+	overflow-x: scroll;
+	scroll-snap-type: x mandatory;
+ 	scroll-behavior: smooth;
+  	-webkit-overflow-scrolling: touch;
+}
+
+.time-boxes button{
+	height: 57px;
+	width: 57px;
+	font-size: 1em;
+	font-weight: bold;
+	text-align: center;
+	border-radius: 10px;
+	margin: 0px 6px 0px 6px;
+	border: 1px solid #F3F3F3; background: #ECF0F3; box-shadow: 5px 5px 5px #c3c3c3, -5px -5px 6px #ffffff;
+	flex-shrink: 0;
+	scroll-snap-align: end;
+}
+
+.time-boxes button:hover{
+	box-shadow: inset 3px 3px 3px #cbced1, inset -3px -3px 3px white;
+}
+
+.timer-pickerholder{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 280px;
+	margin: 6px 0px 10px 0px;
+}
+
+.timer-pickerholder input[type=time] {
+	position: absolute;
+	height: 40px;
+	width: 280px;
+	background: transparent;
+	color: transparent;
+	border: 0px;
+}
+
+/* Utility */
+
+#swdisms{
+	color: #FF0051;
+}
+
+#strbtn, #strTm{
+	color: white;
+	border: 1px solid #6900FF; background: #6900FF; box-shadow: 5px 5px 10px #4B00B7, -5px -5px 12px #ffffff;
+}
+
+#stpbtn, #canTm{
+	color: white;
+	border: 1px solid red; background: #FF1B4B; box-shadow: 5px 5px 10px #A0001E, -5px -5px 12px #ffffff;
+}
+
+#rstbtn, #lapbtn, #pauseTm{
+	color: red;
+}
+
+#pickerTm{
+	width: 120px;
+	height: 40px;
+	border-radius: 10px;
+	font-weight: bold;
+	font-size: 1.1em;
+	flex-grow: 1;
+	border: 1px solid #F3F3F3; background: #ECF0F3; box-shadow: 8px 8px 16px #c3c3c3, -5px -5px 5px #ffffff;
+}
+
+/* Universal Animation*/
+@keyframes fadeout{
+	from{opacity: 1;}
+	to{opacity: 0;}
+}

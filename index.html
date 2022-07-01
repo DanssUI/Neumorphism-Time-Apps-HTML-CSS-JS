@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+	<head>
+   	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="style.css"/>
+		<title>Simple Clock</title>
+	</head>
+	
+	<body>
+		<div class="container">
+			
+			<div class="loader"><h1>My Clock</h1></div>
+			
+			<div class="navbar">
+				<a id="swhref" href="#stopwatch"><button><i class="fa fa-stopwatch"></i></button></a>
+				<a id="chref" href="#clock"><button><i class="fa fa-clock"></i></button></a>
+				<a id="thref" href="#timer"><button><i class="fa-solid fa-hourglass"></i></button></a>
+
+			</div>
+			
+			<div class="content-wrapper">
+				
+		    	<a href="https://github.com/DanssUI" class="fa-brands fa-github"></a>
+
+				<div class="stopw-section" id="stopwatch">
+					
+					<div class="topnavbar">
+						<h2>Stopwatch</h2>
+					</div>
+					
+					<div class="analog">
+						<svg class="progress-ring" width="120px" height="120px">
+  							<circle class="progress-ring__circle" stroke="#FF003E" stroke-width="10" fill="transparent" r="125" cx="50%" cy="50%"/>
+						</svg>
+						<h1 id="swdisplay">00 : 00 :<h1 id="swdisms">&#160;00</h1></h1>
+					</div>
+					
+					<div class="swbtn-holder">
+						<button id="strbtn" onclick="startSw()">Start</button>
+						<button id="stpbtn" style="display: none" onclick="stopSw()">Stop</button>
+						<button id="rstbtn" onclick="resetSw()">Reset</button>
+						<button id="lapbtn" style="display: none" onclick="lapSw()">Lap</button>
+					</div>
+		
+					<!-- There is a bug with overlow -->
+					<div class="lap-box-fixer"><div class="lap-box"></div></div>
+
+				</div>
+			
+				<div class="clock-section" id="clock">
+					<div class="topnavbar">
+						<h2>Clock</h2>
+					</div>
+					
+					<div class="analog">
+						<div class="twelve"></div>
+						<div class="three"></div>
+						<div class="six"></div>
+						<div class="nine"></div>
+
+						<span></span>
+						<div class="hand hour"></div>
+						<div class="hand mins"></div>
+						<div class="hand secs"></div>
+						<button class="ampmtogle" onclick="ampmtogle();">AM/PM</button>
+					</div>
+					
+					<h1></h1>
+					<h3></h3>
+				</div>
+			
+			
+				<div class="timer-section" id="timer">
+					<div class="topnavbar">
+						<h2>Timer</h2>
+					</div>
+					
+					<div class="analog analog-timer">
+						<svg class="progress-ring" width="120px" height="120px">
+  							<circle class="progress-ring-timer-back" stroke-width="10" fill="none" r="125" cx="50%" cy="50%"/>
+						</svg>
+						
+						<svg class="progress-ring" width="120px" height="120px">
+  							<circle class="progress-ring-timer" r="125" cx="50%" cy="50%"/>
+						</svg>
+						
+						<div class="timedisplayHolder">
+				    		<h1 id="tmdisplay">00:00:00</h1>
+			 			</div>						
+					</div>
+					
+					<div class="time-boxes">
+						<button onclick="btninput('00:00:05');">5s</button>
+						<button onclick="btninput('00:00:15');">15s</button>
+						<button onclick="btninput('00:00:30');">30s</button>
+						<button onclick="btninput('00:01:00');">1m</button>
+						<button onclick="btninput('00:10:00');">10m</button>
+						<button onclick="btninput('00:30:00');">30m</button>
+						<button onclick="btninput('01:00:00');">1h</button>
+						<button onclick="btninput('02:00:00');">2h</button>
+		
+					</div>
+					
+					<div class="timer-pickerholder">
+						<button id="pickerTm">Insert Time</button>
+						<input type="time" id="timepicker" step="1" value="00:00:00"/>
+					</div>
+
+					<div class="timer-btnholder">
+						<button id="strTm" onclick="startTm()">Start</button>
+						<button id="pauseTm" style="display : none" onclick="pauseTm()">Pause</button>
+						<button id="canTm" style="display : none" onclick="cancelTm()">Cancel</button>
+					</div>
+
+			     </div>
+			</div>
+			
+		</div>
+	</body>
+	
+	
+	<script src="script.js" type="text/javascript" charset="utf-8"></script>
+	
+</html>
